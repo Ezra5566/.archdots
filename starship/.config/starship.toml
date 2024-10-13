@@ -1,560 +1,129 @@
-"$schema" = 'https://starship.rs/config-schema.json' # editor autocomplete
-# NOTE: Unlike the Warp config, the right_format module was not used to
-# produce the right prompt. This is because that module places elements
-# on the same line as the input location. So fill is used instead.
-# This has been avoided by Warp's default behaviour of creating a new line.
-
-# === Prompt-wide configurations ===
-
- palette = 'gruvpunk'  # gruvpunk'cyberpunk'/'catppuccin_latte'/'catppuccin_mocha'/'catppuccin_frappe'/'catppuccin_macchiato'
-
-command_timeout = 1500       # Default timeout for commands is 500ms
-
-add_newline = true           # A blank line before prompt start
-
-
 format = """
-
-$custom\
-
-$username\
-
-$sudo\
-
-$hostname\
-
-$localip\
-
 $directory\
-
 $git_branch\
-
-$git_commit\
-
-$git_state\
-
 $git_status\
-
 $fill\
-
-$all$cmd_duration\
-
+$python\
+$lua\
+$nodejs\
+$golang\
+$haskell\
+$rust\
+$ruby\
+$aws\
+$docker_context\
+$jobs\
+$cmd_duration\
 $line_break\
+$character"""
 
-$battery\
-
-$character
-
-"""
-
-
-
-
-# === Misc. ===
-
-[fill]
-
-symbol = " "
-
-
-
-
-[character]
-
-success_symbol = "[󰅂](bold green)"
-error_symbol = "[󰩈 ](bold red)"
-vimcmd_symbol = "[](bold green)"
-vimcmd_replace_one_symbol = "[ ](bold purple)"
-vimcmd_replace_symbol = "[ ](bold purple)"
-vimcmd_visual_symbol = "[ ](bold yellow)"
-
-
-
-
-# === 1st Line: left hand side ===
-
-[username]
-
-disabled = false
-format = "[ $user]($style) "
-
-
-
-
-[sudo]
-
-disabled = true
-style = "bold rosewater"
-# symbol = '\[sudo\] '
-symbol = "󰌾 " # " " 
-format = "[$symbol]($style)"
-
-
-
-
-[hostname]
-
-ssh_only = true
-ssh_symbol = " "
-# ssh_symbol = "󰣀 "
-format = "[$ssh_symbol$hostname ]($style)"
-
-
-
-
-[localip]
-
-disabled = false
-
-# only shown with SSH
-
-
-
+add_newline = true
+palette = "nord"
 
 [directory]
-
-truncation_symbol = "…/" # " "
-home_symbol = " ~ "# ~  
+style = 'bold fg:dark_blue'
+format = '[$path ]($style)'
+truncation_length = 3
+truncation_symbol = '…/'
 truncate_to_repo = false
-truncation_length = 0
-style = "bold cyan"
-
-
-
 
 [directory.substitutions]
-
-"~/others" = "  "
-"~/projects/" = "  "
-"~/wrk/" = "  "
-"~/.dotfiles/" = " "
-
-
-
+'Documents' = '󰈙'
+'Downloads' = ' '
+'Music' = ' '
+'Pictures' = ' '
 
 [git_branch]
-
-symbol = " "
-format = '[on](text dimmed) [$symbol$branch(:$remote_branch)]($style) '
-style = "bold green"
-
-
-
-
-[git_commit]
-
-format = '[on](text dimmed) [ $hash$tag]($style) '
-style = "bold green"
-tag_disabled = false
-tag_symbol = "  "
-
-
-
-
-[git_state]
-
-rebase = "REBASING"
-merge = "MERGING"
-cherry_pick = "🍒 PICKING"
-style = "bold yellow"
-
-
-
+style = 'fg:green'
+symbol = ' '
+format = '[on](white) [$symbol$branch ]($style)'
 
 [git_status]
+style = 'fg:red'
+format = '([$all_status$ahead_behind]($style) )'
 
-style = "bold red"
-format = '[$all_status$ahead_behind]($style)'
-renamed = "󰆾 "
-conflicted = "󰞇 "
-up_to_date = " "
-# untracked = " "
-# untracked = " "
-untracked = "󱄁 "
-modified = " "
-deleted = " "
-stashed = "󰏗 "
-staged = '[++$count](green) '
-diverged = "⇕⇡($ahead_count)⇣($behind_count) "
-ahead = "⇡$count "
-behind = "⇣$count "
-
-
-[battery]
-
-disabled = false
-full_symbol = "󱟢 "  # "🔋 "
-charging_symbol = "⚡"
-discharging_symbol = " 󱟤 "
-
-[[battery.display]]
-
-threshold = 50
-style = "bold green"
-
-
-
-
-# === 1st Line: right hand side ===
-
-[cmd_duration]
-
-# min_time = 0
-format = "[  $duration]($style)"
-show_milliseconds = false
-style = "flamingo"
-
-
-
-[memory_usage]
-
-disabled = false
-threshold = 30  ## if memory usage is over 30%, show memory usage
-# format = 'via $symbol [$ram_pct, $ram \($swap_pct, $swap\) ]($style)'
-format = '$symbol [$ram_pct \($ram\) ]($style)'
-symbol = "󰍛" # " "  # "🧠"
-style = "bold dimmed green"
-# style = "bold gray"
-
-
-
-[direnv]
-
-disabled = true
-
-
-
-
-[nodejs]
-
-symbol = "󰎙 "
-format = '[$symbol($version )]($style)'
-
-
-
+[fill]
+symbol = ' '
 
 [python]
-
-symbol = "󰌠 "
+style = 'teal'
+symbol = ' '
 format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
-
-#NOTE: it's possible to show pyenv version
-
-
-
-
-[rust]
-
-symbol = " "
-format = '[$symbol($version )]($style)'
-
-
-
-
-[docker_context]
-
-symbol = " "
-format = '[$symbol$context]($style) '
-
-
-
-
-[vagrant]
-
-symbol = "⍱ "
-format = '[$symbol($version )]($style)'
-
-
-
-
-[java]
-
-symbol = " "
-style = "bold red"
-format = '[${symbol}(${version} )]($style)'
-
-
-
-
-[golang]
-
-symbol = "󰟓 "
-format = '[$symbol($version )]($style)'
-
-
-
-
-[package]
-
-symbol = " "
-format = "[$symbol$version]($style) "
-
-
-
-
-[aws]
-
-symbol = " "
-format = "[$symbol($profile )(\\($region\\) )(\\[$duration\\] )]($style)"
-expiration_symbol = "󰃰"
-
-
-
+pyenv_version_name = true
+pyenv_prefix = ''
 
 [lua]
+format = '[$symbol($version )]($style)'
+symbol = ' '
 
-symbol = " "
-format = "[$symbol($version )]($style)"
+[nodejs]
+style = 'blue'
+symbol = ' '
 
-
-
-
-[ruby]
-
-symbol = " "
-format = "[$symbol($version )]($style)"
-
-
-
-
-[bun]
-
-format = "[$symbol($version )]($style)"
-symbol = " "
-
-
-
-
-[conda]
-
-format = "[$symbol$environment]($style) "
-# ignore_base = false
-
-
-# NOTE: always place this to prevent container tag
-
-[container]
-disabled = true
-symbol =" " # ""
-
-
-
+[golang]
+style = 'blue'
+symbol = ' '
 
 [haskell]
+style = 'blue'
+symbol = ' '
 
-symbol = " "
-format = "[$symbol($version )]($style)"
+[rust]
+style = 'orange'
+symbol = ' '
 
+[ruby]
+style = 'blue'
+symbol = ' '
 
+[package]
+symbol = '󰏗 '
 
+[aws]
+symbol = ' '
+style = 'yellow'
+format = '[$symbol($profile )(\[$duration\] )]($style)'
+
+[docker_context]
+symbol = ' '
+style = 'fg:#06969A'
+format = '[$symbol]($style) $path'
+detect_files = ['docker-compose.yml', 'docker-compose.yaml', 'Dockerfile']
+detect_extensions = ['Dockerfile']
 
 [jobs]
+symbol = ' '
+style = 'red'
+number_threshold = 1
+format = '[$symbol]($style)'
 
-symbol = ""
-# symbol = ""
-# symbol = ""
-# symbol = ""
-# symbol = "✦"
+[cmd_duration]
+min_time = 500
+style = 'fg:gray'
+format = '[$duration]($style)'
 
+[palettes.nord]
+dark_blue = '#5E81AC'
+blue = '#81A1C1'
+teal = '#88C0D0'
+red = '#BF616A'
+orange = '#D08770'
+green = '#A3BE8C'
+yellow = '#EBCB8B'
+purple = '#B48EAD'
+gray = '#434C5E'
+black = '#2E3440'
+white='#D8DEE9'
 
-
-
-[swift]
-
-symbol = " "
-format = "[$symbol($version )]($style)"
-
-
-
-
-[terraform]
-
-symbol = " "
-format = "[$symbol$workspace]($style) "
-
-
-
-[palettes.gruvpunk]
-
-rosewater = "#f2d5cf"  # Soft light pink with a hint of brown
-flamingo = "#d3869b"   # Muted purple-pink with warmth
-pink = "#d4879c"       # Slightly subdued pink
-mauve = "#b16286"      # Warm mauve with a gruv feel
-red = "#fb4934"        # Warm Gruvbox red
-maroon = "#cc241d"     # Deep, rich maroon
-peach = "#fabd2f"      # Gruvbox vibrant peach
-yellow = "#d79921"     # Golden yellow
-green = "#b8bb26"      # Warm earthy green
-teal = "#83a598"       # Muted teal
-sky = "#8ec07c"        # Light greenish-cyan
-sapphire = "#458588"   # Deep gruv blue-green
-blue = "#83a598"       # Muted vibrant blue
-lavender = "#d3869b"   # Gruvbox-inspired lavender-pink
-text = "#ebdbb2"       # Light text with a warm tone
-subtext1 = "#d5c4a1"   # Warmer light gray
-subtext0 = "#bdae93"   # Soft medium gray
-overlay2 = "#a89984"   # Earthy gray
-overlay1 = "#928374"   # Muted dark gray
-overlay0 = "#665c54"   # Darker warm gray
-surface2 = "#3c3836"   # Warm dark brown
-surface1 = "#282828"   # Gruvbox dark gray
-surface0 = "#1d2021"   # Very dark gray-brown
-base = "#1b1d1e"       # Almost black with a warm undertone
-mantle = "#1a1a1a"     # Dark neutral tone
-crust = "#131313"      # Black with a slight warm hue
-
-
-
-
-
-[palettes.catppuccin_frappe]
-
-rosewater = "#f2d5cf"
-flamingo = "#eebebe"
-pink = "#f4b8e4"
-mauve = "#ca9ee6"
-red = "#e78284"
-maroon = "#ea999c"
-peach = "#ef9f76"
-yellow = "#e5c890"
-green = "#a6d189"
-teal = "#81c8be"
-sky = "#99d1db"
-sapphire = "#85c1dc"
-blue = "#8caaee"
-lavender = "#babbf1"
-text = "#c6d0f5"
-subtext1 = "#b5bfe2"
-subtext0 = "#a5adce"
-overlay2 = "#949cbb"
-overlay1 = "#838ba7"
-overlay0 = "#737994"
-surface2 = "#626880"
-surface1 = "#51576d"
-surface0 = "#414559"
-base = "#303446"
-mantle = "#292c3c"
-crust = "#232634"
-
-
-
-
-[palettes.catppuccin_macchiato]
-
-rosewater = "#f4dbd6"
-flamingo = "#f0c6c6"
-pink = "#f5bde6"
-mauve = "#c6a0f6"
-red = "#ed8796"
-maroon = "#ee99a0"
-peach = "#f5a97f"
-yellow = "#eed49f"
-green = "#a6da95"
-teal = "#8bd5ca"
-sky = "#91d7e3"
-sapphire = "#7dc4e4"
-blue = "#8aadf4"
-lavender = "#b7bdf8"
-text = "#cad3f5"
-subtext1 = "#b8c0e0"
-subtext0 = "#a5adcb"
-overlay2 = "#939ab7"
-overlay1 = "#8087a2"
-overlay0 = "#6e738d"
-surface2 = "#5b6078"
-surface1 = "#494d64"
-surface0 = "#363a4f"
-base = "#24273a"
-mantle = "#1e2030"
-crust = "#181926"
-
-
-
-
-[palettes.catppuccin_mocha]
-
-rosewater = "#f5e0dc"
-flamingo = "#f2cdcd"
-pink = "#f5c2e7"
-mauve = "#cba6f7"
-red = "#f38ba8"
-maroon = "#eba0ac"
-peach = "#fab387"
-yellow = "#f9e2af"
-green = "#a6e3a1"
-teal = "#94e2d5"
-sky = "#89dceb"
-sapphire = "#74c7ec"
-blue = "#89b4fa"
-lavender = "#b4befe"
-text = "#cdd6f4"
-subtext1 = "#bac2de"
-subtext0 = "#a6adc8"
-overlay2 = "#9399b2"
-overlay1 = "#7f849c"
-overlay0 = "#6c7086"
-surface2 = "#585b70"
-surface1 = "#45475a"
-surface0 = "#313244"
-base = "#1e1e2e"
-mantle = "#181825"
-crust = "#11111b"
-
-
-
-
-[palettes.cyberpunk]
-
-rosewater = "#ff79c6"  # Light pink
-flamingo = "#bd93f9"   # Purple
-pink = "#ff92df"       # Brighter pink
-mauve = "#bd93f9"      # Purple
-red = "#ff5555"        # Bright red (for contrast)
-maroon = "#ff79c6"     # Light pink
-peach = "#ffb86c"      # Orange (for contrast)
-yellow = "#f1fa8c"     # Neon yellow (for contrast)
-green = "#50fa7b"      # Neon green (for contrast)
-teal = "#8be9fd"       # Cyan
-sky = "#8be9fd"        # Cyan
-sapphire = "#62d6e8"   # Light blue
-blue = "#57c7ff"       # Bright blue
-lavender = "#b4befe"   # Light purple
-text = "#f8f8f2"       # Light text
-subtext1 = "#bfbfbf"   # Lighter gray
-subtext0 = "#a6adc8"   # Light gray
-overlay2 = "#9399b2"   # Gray
-overlay1 = "#7f849c"   # Darker gray
-overlay0 = "#6c7086"   # Even darker gray
-surface2 = "#414558"   # Dark blue-gray
-surface1 = "#282a36"   # Darker blue-gray
-surface0 = "#1e1f29"   # Very dark blue-gray
-base = "#191a21"       # Almost black
-mantle = "#13141a"     # Darker almost black
-crust = "#0b0c0f"      # Blackest black
-
-
-
-
- [os.symbols]
-
-# Alpine = " "
-# Arch = " "
-# CentOS = " "
- # Debian = " "
-# Fedora = " "
-# Gentoo = " "
-# Macos = " "
-# Manjaro = " "
-# Mint = " "
-# NixOS = " "
-# openSUSE = " "
-# SUSE = " "
-# Raspbian = " "
-# Ubuntu = " "
-# RedHatEnterprise = " "
-# Linux = " "
-# Windows = " "
-# AlmaLinux = " "
-Kali = " "
-# Unknown = " "
-
+[palettes.onedark]
+dark_blue='#61afef'
+blue='#56b6c2'
+red='#e06c75'
+green='#98c379'
+purple='#c678dd'
+cyan='#56b6c2'
+orange='#be5046'
+yellow='#e5c07b'
+gray='#828997'
+white ='#abb2bf'
+black='#2c323c'
