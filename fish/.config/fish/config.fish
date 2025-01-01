@@ -15,6 +15,7 @@ alias ld='eza -lhD --icons=auto' # long list dirs
 alias lt='eza --icons=auto --tree' # list folder as tree
 alias c='code'
 alias zl='lazygit'
+alias cmatrix='unimatrix -n -s 96 -l o'
 # fzf search
 alias fzf='fzf --height 40% --layout=reverse --border --preview "bat --style=numbers --color=always {}"'
 alias fzfp='fzf --preview "bat --style=numbers --color=always {}"'
