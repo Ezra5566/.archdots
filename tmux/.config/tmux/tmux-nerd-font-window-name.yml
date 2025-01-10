@@ -1,0 +1,21 @@
+config:
+  fallback-icon: "?" # show when no definit
+  multi-pane-icon: "" # show when window ha
+  show-name: true # show the window name wi
+  icon-position: "left" # show the icon to
+
+icons:
+  fzf: " "
+  python3: " "
+  fish: " "
+  npm: " "
+  btop: ""
+  gh: "" # 
+  gt: "󰊢" 
+  nvim: " " #   
+  mprocs: ""
+  yazi: "󰙅"
+  man: ""
+  devbox: ""
+  openapi-tui: "󱂛"
+
