@@ -52,4 +52,3 @@ end
 abbr mkdir 'mkdir -p'
 zoxide init fish | source
 atuin init fish | source
-neofetch
