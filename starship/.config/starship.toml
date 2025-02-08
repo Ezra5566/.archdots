@@ -1,95 +1,120 @@
-format = """
-$directory\
-$git_branch\
-$git_status\
-$fill\
-$python\
-$lua\
-$nodejs\
-$golang\
-$haskell\
-$rust\
-$ruby\
-$aws\
-$docker_context\
-$jobs\
-$cmd_duration\
-$line_break\
-$character"""
+add_newline = false
+# A minimal left prompt
+format = """$directory$character"""
+palette = "catppuccin_mocha"
+# move the rest of the prompt to the right
+right_format = """$all"""
+command_timeout = 1000
 
-add_newline = true
-palette = "onedark"
-
-[directory]
-style = 'bold fg:dark_blue'
-format = '[$path ]($style)'
-truncation_length = 3
-truncation_symbol = '…/'
-truncate_to_repo = false
+[character]
+vicmd_symbol = "[N] >>>"
+success_symbol = '[➜](bold green)'
 
 [directory.substitutions]
-'Documents' = '󰈙'
-'Downloads' = ' '
-'Music' = ' '
-'Pictures' = ' '
+'~/tests/starship-custom' = 'work-project'
 
-[git_branch]
-style = 'fg:green'
-symbol = ' '
-format = '[on](white) [$symbol$branch ]($style)'
 
 [git_status]
-style = 'fg:red'
-format = '([$all_status$ahead_behind]($style) )'
 
-[fill]
-symbol = ' '
+style = "bold red"
+format = '[$all_status$ahead_behind]($style)'
+renamed = "󰆾 "
+conflicted = "󰞇 "
+up_to_date = " "
+# untracked = " "
+# untracked = " "
+untracked = "󱄁 "
+modified = " "
+deleted = " "
+stashed = "󰏗 "
+staged = '[++$count](green) '
+diverged = "⇕⇡($ahead_count)⇣($behind_count) "
+ahead = "⇡$count "
+behind = "⇣$count "
 
-[python]
-style = 'teal'
-symbol = ' '
-format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
-pyenv_version_name = true
-pyenv_prefix = ''
 
-[lua]
-format = '[$symbol($version )]($style)'
-symbol = ' '
+[git_branch]
 
-[nodejs]
-style = 'blue'
-symbol = ' '
+symbol = " "
+format = '[on](text dimmed) [$symbol$branch(:$remote_branch)]($style) '
+style = "bold green"
 
-[golang]
-style = 'blue'
-symbol = ' '
 
-[haskell]
-style = 'blue'
-symbol = ' '
+[git_state]
 
-[rust]
-style = 'orange'
-symbol = ' '
+rebase = "REBASING"
+merge = "MERGING"
+cherry_pick = "🍒 PICKING"
+style = "bold yellow"
 
-[ruby]
-style = 'blue'
-symbol = ' '
-
-[package]
-symbol = '󰏗 '
 
 [aws]
-symbol = ' '
-style = 'yellow'
-format = '[$symbol($profile )(\[$duration\] )]($style)'
+format = '[$symbol(profile: "$profile" )(\(region: $region\) )]($style)'
+disabled = false
+style = 'bold blue'
+symbol = " "
+
+
+[nodejs]
+
+symbol = "󰎙 "
+format = '[$symbol($version )]($style)'
+
+[python]
+
+symbol = "󰌠 "
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+
+#NOTE: it's possible to show pyenv version
+
+[rust]
+symbol = " "
+format = '[$symbol($version )]($style)'
 
 [docker_context]
-symbol = ' '
-style = 'fg:#06969A'
-format = '[$symbol]($style) $path'
-detect_files = ['docker-compose.yml', 'docker-compose.yaml', 'Dockerfile']
-detect_extensions = ['Dockerfile']
+symbol = " "
+format = '[$symbol$context]($style) '
+
+[vagrant]
+symbol = "⍱ "
+format = '[$symbol($version )]($style)'
+
+[java]
+symbol = " "
+style = "bold red"
+format = '[${symbol}(${version} )]($style)'
+
+[golang]
+symbol = "󰟓 "
+format = '[$symbol($version )]($style)'
+
+[package]
+symbol = " "
+format = "[$symbol$version]($style) "
+
+[lua]
+symbol = " "
+format = "[$symbol($version )]($style)"
+
+[ruby]
+symbol = " "
+format = "[$symbol($version )]($style)"
+
+[bun]
+format = "[$symbol($version )]($style)"
+symbol = " "
+
+[conda]
+format = "[$symbol$environment]($style) "
+# ignore_base = false
+
+[container]
+disabled = true
+symbol =" " # ""
+
+[haskell]
+symbol = " "
+format = "[$symbol($version )]($style)"
 
 [jobs]
 symbol = ' '
@@ -97,33 +122,82 @@ style = 'red'
 number_threshold = 1
 format = '[$symbol]($style)'
 
-[cmd_duration]
-min_time = 500
-style = 'fg:gray'
-format = '[$duration]($style)'
+[swift]
+symbol = " "
+format = "[$symbol($version )]($style)"
 
-[palettes.nord]
-dark_blue = '#5E81AC'
-blue = '#81A1C1'
-teal = '#88C0D0'
-red = '#BF616A'
-orange = '#D08770'
-green = '#A3BE8C'
-yellow = '#EBCB8B'
-purple = '#B48EAD'
-gray = '#434C5E'
-black = '#2E3440'
-white='#D8DEE9'
+[terraform]
+symbol = " "
+format = "[$symbol$workspace]($style) "
 
-[palettes.onedark]
-dark_blue='#61afef'
-blue='#56b6c2'
-red='#e06c75'
-green='#98c379'
-purple='#c678dd'
-cyan='#56b6c2'
-orange='#be5046'
-yellow='#e5c07b'
-gray='#828997'
-white ='#abb2bf'
-black='#2c323c'
+[kubernetes]
+symbol = '☸ '
+disabled = true
+detect_files = ['Dockerfile']
+format = '[$symbol$context( \($namespace\))]($style) '
+contexts = [
+  { context_pattern = "arn:aws:eks:us-west-2:577926974532:cluster/zd-pvc-omer", style = "green", context_alias = "omerxx", symbol = " " },
+]
+
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"
+
+
+
+
+[palettes.gruvpunk]
+
+rosewater = "#f2d5cf"  # Soft light pink with a hint of brown
+flamingo = "#d3869b"   # Muted purple-pink with warmth
+pink = "#d4879c"       # Slightly subdued pink
+mauve = "#b16286"      # Warm mauve with a gruv feel
+red = "#fb4934"        # Warm Gruvbox red
+maroon = "#cc241d"     # Deep, rich maroon
+peach = "#fabd2f"      # Gruvbox vibrant peach
+yellow = "#d79921"     # Golden yellow
+green = "#b8bb26"      # Warm earthy green
+teal = "#83a598"       # Muted teal
+sky = "#8ec07c"        # Light greenish-cyan
+sapphire = "#458588"   # Deep gruv blue-green
+blue = "#83a598"       # Muted vibrant blue
+lavender = "#d3869b"   # Gruvbox-inspired lavender-pink
+text = "#ebdbb2"       # Light text with a warm tone
+subtext1 = "#d5c4a1"   # Warmer light gray
+subtext0 = "#bdae93"   # Soft medium gray
+overlay2 = "#a89984"   # Earthy gray
+overlay1 = "#928374"   # Muted dark gray
+overlay0 = "#665c54"   # Darker warm gray
+surface2 = "#3c3836"   # Warm dark brown
+surface1 = "#282828"   # Gruvbox dark gray
+surface0 = "#1d2021"   # Very dark gray-brown
+base = "#1b1d1e"       # Almost black with a warm undertone
+mantle = "#1a1a1a"     # Dark neutral tone
+crust = "#131313"      # Black with a slight warm hue
+
+
+
