@@ -51,4 +51,3 @@ end
 # Always mkdir a path (this doesn't inhibit functionality to make a single dir)
 abbr mkdir 'mkdir -p'
 zoxide init fish | source
-atuin init fish | source
